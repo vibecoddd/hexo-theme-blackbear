@@ -8,7 +8,7 @@ A simple theme for Hexo inspired by [even](https://github.com/ahonn/hexo-theme-e
 Run the comand-lines below:
 ```bash
 npm install hexo-renderer-ejs hexo-renderer-dartsass --save
-git clone https://github.com/blackbear03/hexo-theme-blackbear themes/blackbear
+git clone https://github.com/vibecoddd/hexo-theme-blackbear themes/blackbear
 cp themes/blackbear/_config.yml.example themes/blackbear/_config.yml
 ```
 
