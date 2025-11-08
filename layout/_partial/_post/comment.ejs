@@ -1,0 +1,258 @@
+<% if (theme.comments && theme.comments.enable !== false) { %>
+  <% const commentManager = new BlackbearState.CommentStateManager(theme, page); %>
+  <% const shouldShowComments = commentManager.shouldShowComments(); %>
+  <% const availableSystems = commentManager.getAvailableSystems(); %>
+  
+  <% if (shouldShowComments && availableSystems.length > 0) { %>
+    <div class="post-comment">
+      <div class="comment-header">
+        <h3 class="comment-title">
+          <i class="fas fa-comments"></i>
+          评论区
+        </h3>
+        <% if (availableSystems.length > 1) { %>
+          <div class="comment-system-switcher">
+            <span class="switcher-label">切换评论系统：</span>
+            <% availableSystems.forEach(function(system, index) { %>
+              <button class="comment-system-btn <%= system.type %>-btn <%= index === 0 ? 'active' : '' %>" 
+                      data-system="<%= system.type %>"
+                      onclick="switchCommentSystem('<%= system.type %>')">
+                <%= system.type.charAt(0).toUpperCase() + system.type.slice(1) %>
+              </button>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+      
+      <div class="comment-content">
+        <% availableSystems.forEach(function(system, index) { %>
+          <div id="<%= system.id %>" class="comment-system <%= system.type %>-container <%= index === 0 ? 'active' : '' %>">
+            <!-- 评论系统将由对应的JavaScript初始化 -->
+          </div>
+        <% }); %>
+      </div>
+      
+      <div class="comment-footer">
+        <p class="comment-powered-by">
+          评论系统由 <strong><%= availableSystems[0].type %></strong> 提供支持
+        </p>
+      </div>
+    </div>
+    
+    <style>
+      .post-comment {
+        margin: 40px 0;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+      }
+      
+      .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f8f9fa;
+      }
+      
+      .comment-title {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 1.5em;
+        font-weight: 600;
+      }
+      
+      .comment-title i {
+        color: #3498db;
+        margin-right: 10px;
+      }
+      
+      .comment-system-switcher {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .switcher-label {
+        font-size: 0.9em;
+        color: #6c757d;
+        font-weight: 500;
+      }
+      
+      .comment-system-btn {
+        padding: 8px 16px;
+        border: 2px solid #dee2e6;
+        background: #ffffff;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        color: #495057;
+      }
+      
+      .comment-system-btn:hover {
+        border-color: #3498db;
+        color: #3498db;
+        transform: translateY(-1px);
+      }
+      
+      .comment-system-btn.active {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        border-color: #3498db;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+      
+      .comment-content {
+        min-height: 200px;
+      }
+      
+      .comment-system {
+        display: none;
+      }
+      
+      .comment-system.active {
+        display: block;
+      }
+      
+      .comment-footer {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #e9ecef;
+        text-align: center;
+      }
+      
+      .comment-powered-by {
+        margin: 0;
+        font-size: 0.85em;
+        color: #6c757d;
+      }
+      
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .post-comment {
+          margin: 20px 0;
+          padding: 20px;
+        }
+        
+        .comment-header {
+          flex-direction: column;
+          gap: 15px;
+          text-align: center;
+        }
+        
+        .comment-system-switcher {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+      
+      /* Gitalk样式优化 */
+      .gt-header {
+        border-radius: 8px;
+        background: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .gt-comment {
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #e9ecef;
+        margin-bottom: 15px;
+        padding: 15px;
+        transition: all 0.3s ease;
+      }
+      
+      .gt-comment:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+      
+      /* Utterances样式优化 */
+      .utterances {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+      
+      /* 加载动画 */
+      .comment-loading {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+      }
+      
+      .comment-loading::after {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-left: 10px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    
+    <script>
+      // 评论系统切换功能
+      function switchCommentSystem(systemType) {
+        // 隐藏所有评论系统
+        document.querySelectorAll('.comment-system').forEach(function(container) {
+          container.classList.remove('active');
+        });
+        
+        // 移除所有按钮的active状态
+        document.querySelectorAll('.comment-system-btn').forEach(function(btn) {
+          btn.classList.remove('active');
+        });
+        
+        // 显示选中的评论系统
+        var targetContainer = document.querySelector('.' + systemType + '-container');
+        if (targetContainer) {
+          targetContainer.classList.add('active');
+        }
+        
+        // 激活对应的按钮
+        var targetBtn = document.querySelector('.' + systemType + '-btn');
+        if (targetBtn) {
+          targetBtn.classList.add('active');
+        }
+        
+        // 更新页脚信息
+        var footer = document.querySelector('.comment-powered-by');
+        if (footer) {
+          footer.innerHTML = '评论系统由 <strong>' + systemType + '</strong> 提供支持';
+        }
+        
+        console.log('已切换到评论系统:', systemType);
+      }
+      
+      // 初始化评论系统
+      document.addEventListener('DOMContentLoaded', function() {
+        // 默认显示第一个评论系统
+        var firstSystem = document.querySelector('.comment-system');
+        if (firstSystem) {
+          firstSystem.classList.add('active');
+        }
+        
+        // 为评论容器添加加载状态
+        document.querySelectorAll('.comment-system').forEach(function(container) {
+          if (container.children.length === 0) {
+            container.innerHTML = '<div class="comment-loading">正在加载评论系统...</div>';
+          }
+        });
+      });
+    </script>
+  <% } %>
+<% } %>

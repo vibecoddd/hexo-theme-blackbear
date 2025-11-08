@@ -1,6 +1,10 @@
-<% if (theme.fancybox) { %>
-<% var fancybox_js = 'fancybox/jquery.fancybox.pack.js' %>
-<% } %>
+<% 
+  // 使用状态管理器统一管理脚本库状态
+  const themeManager = new BlackbearState.ThemeStateManager(theme, config);
+  const shouldLoadFancybox = themeManager.shouldShowFancybox();
+%>
+
+<% var fancybox_js = shouldLoadFancybox ? 'fancybox/jquery.fancybox.pack.js' : null; %>
 
 <%
 var js_libs = {
@@ -8,10 +12,18 @@ jquery: 'jquery/jquery.min.js',
 slideout: 'slideout/slideout.js',
 fancybox: fancybox_js,
 }
+
+// 添加Prism.js语法高亮库
+if (theme.prism && theme.prism.enable) {
+  js_libs['prism-core'] = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js';
+  js_libs['prism-autoloader'] = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js';
+  js_libs['prism-toolbar'] = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js';
+  js_libs['prism-copy-to-clipboard'] = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js';
+}
 %>
 
 <% for (var lib in js_libs) { %>
-<% if (lib) { %>
-<script type="text/javascript" src="<%- url_for('lib') %>/<%- lib %>"></script>
+<% if (js_libs[lib]) { // 只加载非空的库 %>
+<script type="text/javascript" src="<%- js_libs[lib].startsWith('http') ? js_libs[lib] : url_for('lib') + '/' + js_libs[lib] %>"></script>
 <% } %>
 <% } %>

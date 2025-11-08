@@ -40,6 +40,11 @@ fancybox: true
 # LaTeX support (via MathJax)
 latex: false
 
+# Prism.js syntax highlighting
+prism:
+  enable: true
+  theme: tomorrow # Available themes: default, tomorrow, twilight, coy, dark, funky, okaidia, solarizedlight
+
 copyright:
   enable: true
   # https://creativecommons.org/

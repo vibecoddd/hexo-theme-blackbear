@@ -44,17 +44,18 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
-  enable: false
+  enable: true
   preprocess: true
   line_number: true
   tab_replace: ''
+  theme: solarizedlight
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -105,6 +106,29 @@ feed:
      limit: 20
 ## Themes: https://hexo.io/themes/
 theme: blackbear
+
+# Comments
+# Utterances评论系统配置（默认启用）
+utterances:
+  enable: true
+  repo: 'vibecoddd/hexo-theme-blackbear'  # 存储评论的GitHub仓库
+  issueTerm: 'title'  # Issue映射方式: pathname | url | title | og:title
+  theme: 'github-light'  # 主题: github-light | github-dark | github-dark-orange | icy-dark | dark-blue | photon-dark
+  label: 'comment'  # Issue标签
+
+# Gitalk评论系统配置（可选）
+gitalk:
+  enable: false  # 默认禁用，如需启用请设置为true并配置以下参数
+  client_id: ''  # GitHub OAuth App Client ID
+  client_secret: ''  # GitHub OAuth App Client Secret
+  repo: ''  # 存储评论的GitHub仓库
+  github_id: ''  # GitHub用户名
+  admin_user: ''  # 管理员用户名
+  distraction_free_mode: true  # 无干扰模式
+  language: ''  # 语言设置，留空则自动检测
+
+# Disqus评论系统配置（可选）
+disqus_shortname: ''  # Disqus站点简称
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

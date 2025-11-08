@@ -1,8 +1,14 @@
-<% if (!is_home() && toc(page.content) && !!theme.toc) { %>
+<% 
+  // 使用状态管理器统一管理TOC状态
+  const tocManager = new BlackbearState.TocStateManager(theme, page, page.content);
+  const shouldShowToc = tocManager.shouldShowToc();
+%>
+
+<% if (shouldShowToc) { %>
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title"><%- __('posts.toc') %></h2>
     <div class="post-toc-content">
       <%- toc(page.content, theme.toc) %>
     </div>
   </div>
-  <% } %>
+<% } %>

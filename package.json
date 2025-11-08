@@ -1,25 +1,43 @@
 {
-  "name": "hexo-theme-even",
-  "version": "2.11.0",
-  "description": "A super simple theme for Hexo",
+  "name": "hexo-theme-blackbear",
+  "version": "3.0.0",
+  "description": "A modern and clean theme for Hexo",
   "main": "index.js",
   "keywords": [
+    "hexo",
+    "theme",
     "responsive",
     "simple",
-    "light"
+    "clean",
+    "blog"
   ],
-  "author": "ahonn",
+  "author": "blackbear03",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahonn/hexo-theme-even.git"
+    "url": "git+https://github.com/blackbear03/hexo-theme-blackbear.git"
   },
   "bugs": {
-    "url": "https://github.com/ahonn/hexo-theme-even/issues"
+    "url": "https://github.com/blackbear03/hexo-theme-blackbear/issues"
   },
-  "homepage": "https://github.com/ahonn/hexo-theme-even#readme",
+  "homepage": "https://github.com/blackbear03/hexo-theme-blackbear#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "hexo": ">=5.0.0"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .js,.ejs",
+    "lint:fix": "eslint . --ext .js,.ejs --fix",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
   "devDependencies": {
-    "all-contributors-cli": "^6.9.1",
-    "eslint": "^6.5.1"
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1"
+  },
+  "dependencies": {
+    "prismjs": "^1.30.0"
   }
 }

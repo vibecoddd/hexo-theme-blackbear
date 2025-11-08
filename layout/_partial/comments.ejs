@@ -1,28 +1,40 @@
-<% if (page.comments && !is_home()) { %>  
+<% 
+  // 使用状态管理器统一管理评论状态
+  const commentManager = new BlackbearState.CommentStateManager(theme, page);
+  const shouldShowComments = commentManager.shouldShowComments();
+  const availableSystems = commentManager.getAvailableSystems();
+  const preferredSystem = commentManager.getPreferredSystem();
+%>
+
+<% if (shouldShowComments && availableSystems.length > 0) { %>  
   <div class="comments" id="comments">  
-    <% if (theme.disqus_shortname) { %>  
-      <div id="disqus_thread">  
-        <noscript>  
-          Please enable JavaScript to view the  
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>  
-        </noscript>  
-      </div>  
-    <% } else if (theme.livere_datauid) { %>  
-      <div id="lv-container" data-id="city" data-uid="<%- theme.livere_datauid %>">  
-        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>  
-      </div>    
-    <% } else if (theme.gitalk && theme.gitalk.enable) { %>  
-      <div id="gitalk-container"></div>  
-    <% } else if (theme.utterances && theme.utterances.enable) { %>  
-      <div id="utterances-container"></div>  
-    <% } else if (theme.cusdis && theme.cusdis.app_id) { %>  
-      <div id="cusdis_thread"  
-        data-host="<%- theme.cusdis.host || 'https://cusdis.com' %>"  
-        data-app-id="<%- theme.cusdis.app_id %>"  
-        data-page-id="<%- page.path %>"  
-        data-page-url="<%- page.permalink %>"  
-        data-page-title="<%- page.title %>"  
-      ></div>  
-    <% } %>  
+    <% availableSystems.forEach(function(system, index) { %>
+      <% if (index === 0) { // 只显示第一个可用的系统 %>
+        <% if (system.type === 'disqus') { %>
+          <div id="<%= system.id %>">  
+            <noscript>  
+              Please enable JavaScript to view the  
+              <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>  
+            </noscript>  
+          </div>  
+        <% } else if (system.type === 'livere') { %>
+          <div id="<%= system.id %>" data-id="city" data-uid="<%- system.config.datauid %>">  
+            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>  
+          </div>    
+        <% } else if (system.type === 'gitalk') { %>
+          <div id="<%= system.id %>"></div>  
+        <% } else if (system.type === 'utterances') { %>
+          <div id="<%= system.id %>"></div>  
+        <% } else if (system.type === 'cusdis') { %>
+          <div id="<%= system.id %>"  
+            data-host="<%- system.config.host || 'https://cusdis.com' %>"  
+            data-app-id="<%- system.config.app_id %>"  
+            data-page-id="<%- page.path %>"  
+            data-page-url="<%- page.permalink %>"  
+            data-page-title="<%- page.title %>"  
+          ></div>  
+        <% } %>
+      <% } %>
+    <% }); %>
   </div>  
-<% } %>  
+<% } %>

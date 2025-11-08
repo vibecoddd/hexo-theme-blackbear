@@ -1,22 +1,45 @@
-<div class="logo-wrapper">  
-  <a href="<%- url_for('.') %>" class="logo"><%- config.title %></a>  
-</div>  
-  
-<nav class="site-navbar">  
-  <% if (theme.menu) { %>  
-    <ul id="menu" class="menu">  
-      <% for (var name in theme.menu) { %>  
-        <li class="menu-item">  
-          <a class="menu-item-link" href="<%- url_for(theme.menu[name]) %>">  
-            <% var itemName = __('menu.' + name.toLowerCase()); %>  
-            <% if (itemName.startsWith('menu')) { %>  
-              <%- name %>  
-            <% } else { %>  
-              <%- itemName %>  
-            <% } %>  
-          </a>  
-        </li>  
-      <% } %>  
-    </ul>  
-  <% } %>  
-</nav>  
+<header id="header">
+  <div class="header-inner">
+    <div id="logo">
+      <a href="<%- url_for('.') %>">
+        <img src="<%= url_for(theme.head.favicon) %>" alt="<%= config.title %>">
+        <span class="logo-text"><%= config.title %></span>
+      </a>
+    </div>
+    <div id="nav-menu">
+      <ul id="nav-menu-list">
+        <% 
+          const menuItems = theme.menu || {};
+          for (let menuKey in menuItems) {
+            const menuPath = menuItems[menuKey];
+            const menuTitle = getMenuTitle(menuKey);
+            const isActive = isMenuActive(menuPath);
+        %>
+          <li class="nav-menu-item <%= isActive ? 'active' : '' %>">
+            <a href="<%- url_for(menuPath) %>" class="nav-menu-link">
+              <span><%= menuTitle %></span>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+      <div id="mobile-nav-menu">
+        <span class="mobile-nav-menu-btn">
+          <i class="icon icon-menu"></i>
+        </span>
+        <ul id="mobile-nav-menu-list">
+          <% 
+            for (let menuKey in menuItems) {
+              const menuPath = menuItems[menuKey];
+              const menuTitle = getMenuTitle(menuKey);
+          %>
+            <li class="mobile-nav-menu-item">
+              <a href="<%- url_for(menuPath) %>" class="mobile-nav-menu-link">
+                <span><%= menuTitle %></span>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

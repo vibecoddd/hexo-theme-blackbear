@@ -24,6 +24,8 @@
     if(this.config.latex) {
       this.renderLaTeX();
     }
+    // 初始化语法高亮
+    this.initPrismHighlight();
     this.backToTop();
   };
 
@@ -70,7 +72,9 @@
 
     if ($toc.length) {
       var minScrollTop = $toc.offset().top - SPACING;
-      $(window).scroll(function () {
+      
+      // 使用节流优化滚动性能
+      var throttledScrollHandler = BlackbearUtils.throttle(function () {
         var tocState = {
           start: {
             'position': 'absolute',
@@ -101,7 +105,9 @@
             }
           }
         }
-      })
+      }, 16); // 约60fps
+      
+      BlackbearUtils.optimizedScroll(throttledScrollHandler);
     }
   };
 
@@ -110,7 +116,8 @@
     var $toclink = $('.toc-link'),
       $headerlink = $('.headerlink');
 
-    $(window).scroll(function () {
+    // 使用节流优化目录跟随性能
+    var throttledScrollHandler = BlackbearUtils.throttle(function () {
       var headerlinkTop = $.map($headerlink, function (link) {
         return $(link).offset().top;
       });
@@ -127,7 +134,9 @@
           $($toclink[i]).removeClass('active');
         }
       }
-    });
+    }, 16); // 约60fps
+    
+    BlackbearUtils.optimizedScroll(throttledScrollHandler);
   };
 
   Even.prototype.fancybox = function () {
@@ -231,15 +240,18 @@
   Even.prototype.backToTop = function () {
     var $backToTop = $('#back-to-top');
 
-    $(window).scroll(function () {
+    // 使用节流优化回到顶部按钮显示性能
+    var throttledScrollHandler = BlackbearUtils.throttle(function () {
       if ($(window).scrollTop() > 100) {
-        $backToTop.fadeIn(1000);
+        $backToTop.fadeIn();
       } else {
-        $backToTop.fadeOut(1000);
+        $backToTop.fadeOut();
       }
-    });
+    }, 16); // 约60fps
 
-    $backToTop.click(function () {
+    BlackbearUtils.optimizedScroll(throttledScrollHandler);
+
+    $backToTop.on('click', function () {
       $('body,html').animate({ scrollTop: 0 });
     });
   };
@@ -254,6 +266,34 @@
       }
     }, 500);
   }
+
+  Even.prototype.initPrismHighlight = function () {
+    // 初始化Prism语法高亮
+    if (window.Prism && this.config.prism && this.config.prism.enable) {
+      // 等待DOM加载完成后初始化
+      $(document).ready(function() {
+        // 重新高亮所有代码块
+        Prism.highlightAll();
+        
+        // 为shell/bash类型的代码块添加特定的语言标识
+        $('pre code[class*="language-"]').each(function() {
+          var $code = $(this);
+          var className = $code.attr('class');
+          
+          // 如果包含shell相关关键词，确保正确识别
+          if (className && (className.includes('shell') || className.includes('sh') || className.includes('bash'))) {
+            // 确保Prism能正确识别这些语言
+            if (!className.includes('language-bash') && !className.includes('language-shell')) {
+              $code.addClass('language-bash');
+            }
+          }
+        });
+        
+        // 再次高亮以确保新添加的语言类生效
+        Prism.highlightAll();
+      });
+    }
+  };
 
   var config = window.config;
   var even = new Even(config);
