@@ -5,8 +5,12 @@
   <%- partial('_partial/head.ejs') %>
   <%
   var title;
+  var url = config.url;
+  var description = '';
+  
   if (is_home()){
     title = config.title;
+    description = config.description || config.title;
   } else if (page.archive){
     if (is_month()){
       title = __('menu.archives') + ' - ' + page.year + '/' + page.month + ' · ' + config.title;
@@ -15,17 +19,29 @@
     } else { 
       title = __('menu.archives') + ' · ' + config.title;
     }
+    description = title;
   } else if (is_category()){
     title = page.category + ' · ' + config.title;
+    description = title;
   } else if (is_tag()){
     title = page.tag + ' · ' + config.title;
+    description = title;
   } else if (is_page() && page.title){
     title = __('menu.' + page.title.toLowerCase()) + ' · ' + config.title;
-  } else {
+    description = title;
+  } else if (page.title) {
     title = page.title + ' - ' + config.title;
+    description = page.description || page.excerpt || page.title;
+  } else {
+    title = config.title;
+    description = config.description || config.title;
+  }
+  
+  if (page.path) {
+    url = config.url + '/' + page.path.replace('index.html', '');
   }
   %>
-  <%- partial("_partial/title.ejs", {title: title}) %>
+  <%- partial("_partial/title.ejs", {title: title, url: url, description: description}) %>
 
 </head>
 

@@ -1,4 +1,4 @@
-<!-- Website mata -->
+<!-- Website meta -->
 <%- partial ("./_head/meta.ejs") %>
 
 <!-- Website rss -->
@@ -16,7 +16,13 @@
 <% } %>
 
 <!-- Canonical, good for google search engine -->
+<% if (page && page.canonical_path) { %>
 <link rel="canonical" href="<%- config.url %>/<%- page.canonical_path.replace('index.html', '') %>" />
+<% } else if (page && page.path) { %>
+<link rel="canonical" href="<%- config.url %>/<%- page.path.replace('index.html', '') %>" />
+<% } else { %>
+<link rel="canonical" href="<%- config.url %>" />
+<% } %>
 
 <!-- Fancybox styling -->
 <% if (theme.fancybox) { %>
@@ -52,7 +58,16 @@
 
 <!-- LeanCloud Counter -->
 <%- partial ("../_script/counter.ejs") %>
-<% var themeConfig = { leancloud: theme.leancloud, toc: theme.toc, fancybox: theme.fancybox, pjax: theme.pjax, latex: theme.latex, prism: theme.prism }; %>
+<% 
+var themeConfig = { 
+  leancloud: theme.leancloud || {}, 
+  toc: theme.toc || false, 
+  fancybox: theme.fancybox || false, 
+  pjax: theme.pjax || false, 
+  latex: theme.latex || false, 
+  prism: theme.prism || {} 
+}; 
+%>
 <script>
   window.config = <%- JSON.stringify(themeConfig) %>;
 </script>
