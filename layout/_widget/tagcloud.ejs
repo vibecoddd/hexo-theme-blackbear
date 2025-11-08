@@ -1,0 +1,14 @@
+<% if (site.tags.length) { %>
+    <div class="tag-cloud">
+        <div class="card-content">
+            <h3 class="menu-label">
+                <%= __('Tags') %>
+            </h3>
+            <script type="text/javascript" charset="utf-8" src="<%- url_for('/js/tagcloud.js') %>"></script>
+            <script type="text/javascript" charset="utf-8" src="<%- url_for('/js/tagcanvas.js') %>"></script>
+            <canvas width="200" height="200" id="resCanvas" style="width:100%">
+                <%- tagcloud() %>
+            </canvas>
+        </div>
+    </div>
+<% } %>

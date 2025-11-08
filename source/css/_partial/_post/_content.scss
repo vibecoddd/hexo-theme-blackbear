@@ -2,6 +2,10 @@
 // Post content
 // ==============================
 
+// Add these variables at the top of the file
+$content-text-color: rgba(#4D5057, 1.0);
+$content-box-shadow: rgba(0,0,0,0.125);
+
 .post-content {
   @for $i from 1 through 6 {
     h#{$i} {
@@ -20,13 +24,13 @@
         content: $content-headings-anchor;
         margin-right: 5px;
         font-size: 1.1em;
-        color: $theme-color;
+        color: $content-text-color;
       }
     }
   }
 
   a {
-    color: $theme-color;
+    color: $content-text-color;
     word-break: break-all;
 
     &:hover {
@@ -56,7 +60,7 @@
     color: rgba(#34495e, 0.8);
     background-color: $content-blockquote-backgroud;
     border-left: $content-blockquote-border-left;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+    box-shadow: 1px 1px 2px $content-box-shadow;
 
     p {
       margin: 0;
@@ -79,7 +83,7 @@
     width: 100%;
     max-width: 100%;
     border-spacing: 0;
-    box-shadow: 2px 2px 3px rgba(0,0,0,.125);
+    box-shadow: 2px 2px 3px $content-box-shadow;
 
     thead {
       background: $deputy-color;

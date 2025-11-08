@@ -1,5 +1,18 @@
 <!-- Social Links -->
 <%- partial ("./_footer/social.ejs") %>
+<!-- <% if (theme.busuanzi && theme.busuanzi.enable){ %>
+  <span id="busuanzi_container_site_pv">
+    欢迎来自C-53行星的第<span id="busuanzi_value_site_uv"></span>位访客
+  </span>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+ <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv" style='display:none'>
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+  </span>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<% } %> -->
 
 <!-- <div class="copyright">
   <span class="power-by">
@@ -34,3 +47,20 @@
   </span>
 
 </div> -->
+
+<div class="copyright">
+  <% if (theme.busuanzi && theme.busuanzi.enable){ %>
+    <span id="busuanzi_container_site_pv">
+      欢迎来自C-53行星的第<span id="busuanzi_value_site_uv"></span>位朋友
+    </span>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <% } %>
+  <!-- 使用emoji的Unicode -->
+  <span class="waving-hand">
+    &#x1F44B	
+  </span>
+  <!-- <span class="heart">
+    <i class="iconfont icon-heart"></i>
+  </span> -->
+
+</div>

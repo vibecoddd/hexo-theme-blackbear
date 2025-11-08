@@ -3,9 +3,13 @@
 // =============================
 
 .tag-cloud {
-  margin: 2em 0 3em;
   text-align: center;
   font-family: $global-serif-font-family;
+  position: fixed;
+  top: 150px;
+  width: $post-toc-width;
+  margin-left: $post-toc-margin-left - 200px;
+  padding: 10px;         
 
   .tag-cloud-title {
     display: inline-block;

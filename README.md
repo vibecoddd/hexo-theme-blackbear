@@ -2,7 +2,7 @@
 
 A simple theme for Hexo inspired by [even](https://github.com/ahonn/hexo-theme-even) and [PAULO ANDRADE's BLOG](https://pfandrade.me/)
 
-[ Live Preview](https://blog.next-x.xyz/)
+[ Live Preview](https://lwchannel.com)
 
 ## How To Use It
 Run the comand-lines below:
