@@ -107,6 +107,12 @@ feed:
 ## Themes: https://hexo.io/themes/
 theme: blackbear
 
+# Theme Settings
+color: default
+mode: default # 添加默认模式配置
+toc: true
+fancybox: true
+
 # Comments
 # Utterances评论系统配置（默认启用）
 utterances:

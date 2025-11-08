@@ -1,5 +1,5 @@
 <section id="posts" class="posts">
-  <% var mode = theme.mode.toLowerCase(); %>
+  <% var mode = theme.mode ? theme.mode.toLowerCase() : 'default'; %>
   <% if (mode == 'default') { %>
   <% page.posts.each(function(post) { %>
   <%- partial('_macro/post.ejs', {post: post}) %>
