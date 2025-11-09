@@ -401,8 +401,8 @@ $content-blockquote-border-left: 3px solid rgba($theme-color, 0.3) !default;
 $content-table-border-color: darken($deputy-color, 3%) !default;
 
 // ========== Code ========== //
-// Color of the code.
-$code-color: #c7254e !default;
+// Color of the code (atom-one-dark theme).
+$code-color: #abb2bf !default;
 
 // Font size of code.
 $code-font-size: 13px !default;
@@ -410,15 +410,15 @@ $code-font-size: 13px !default;
 // Font family of the code.
 $code-font-family: Consolas, Monaco, Menlo, Consolas, monospace !default;
 
-// Color of code highlight, solarized.
+// Color of code highlight, atom-one-dark theme.
 $code-highlight-color: (
-  comment: #93a1a1,
-  keyword: #8be9fd,
-  number: #50fa7b,
-  title: #268bd2,
-  attribute: #b58900,
-  symbol: #cb4b16,
-  built_in: #dc322f
+  comment: #5c6370,
+  keyword: #c678dd,
+  number: #98c379,
+  title: #61afef,
+  attribute: #e06c75,
+  symbol: #56b6c2,
+  built_in: #e5c07b
 ) !default;
 
 // Code type list.
